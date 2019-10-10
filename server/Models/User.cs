@@ -17,5 +17,6 @@ namespace server.Models
         public ICollection<TaskWatch> WatchedTasks { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<OrganizationUser> Organizations { get; set; }
+        public ICollection<Invitation> Invitations { get; set; }
     }
 }

@@ -2,4 +2,5 @@
 **obj
 **node_modules
 **.vs
+**.vscode
 **.db**
