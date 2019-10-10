@@ -68,6 +68,16 @@ namespace server.data
                 .HasOne(ou => ou.Organization)
                 .WithMany(o => o.Users)
                 .HasForeignKey(ou => ou.OrganizationId);
+            modelBuilder.Entity<Invitation>()
+                .HasKey(i => new {i.UserId, i.OrganizationId});
+            modelBuilder.Entity<Invitation>()
+                .HasOne(i => i.User)
+                .WithMany(u => u.Invitations)
+                .HasForeignKey(i => i.UserId);
+            modelBuilder.Entity<Invitation>()
+                .HasOne(i => i.Organization)
+                .WithMany(o => o.Invitations)
+                .HasForeignKey(i => i.OrganizationId);
         }
     }
 }
