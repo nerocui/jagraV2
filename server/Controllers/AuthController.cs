@@ -27,6 +27,11 @@ namespace server.Controllers
         [HttpPost("register")]
 		public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
 		{
+			Console.WriteLine("params:");
+			
+			Console.WriteLine(userForRegisterDto.Username);
+			Console.WriteLine(userForRegisterDto.Password);
+			
 			var username = userForRegisterDto.Username;
 			var password = userForRegisterDto.Password;
 			// validate request

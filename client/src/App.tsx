@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { State, AuthState } from './models';
 
-const App: React.FC = () => {
+const App: React.FC<AuthState> = (props: AuthState) => {
+  console.log(props);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Hello World
     </div>
   );
 }
 
-export default App;
+function MapStateToProps(state: State): AuthState {
+  return {
+    loggedIn: state.AuthState.loggedIn,
+    token: state.AuthState.token,
+  };
+}
+
+export default connect(MapStateToProps)(App);
