@@ -11,6 +11,8 @@ export default (state = initialAuthState, action: Action) => {
 	switch (action.type) {
 		case TYPE.LOGIN:
 			return Object.assign({}, state, { token: action.payload, loggedIn: IsLoggedIn(action.payload) });
+		case TYPE.LOGOUT:
+			return initialAuthState;
 		default:
 			return state;
 	}

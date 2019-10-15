@@ -15,7 +15,7 @@ export function IsLoggedIn(token=localStorage.getItem('token') || ''): boolean {
 	try {
 		const decoded = JwtDecode(token);
 		console.log('Decoded: ', decoded);
-		return !decoded;
+		return !!decoded;
 	} catch (e) {
 		console.log('Failed to decode token: ', e);
 		return false;
