@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
@@ -79,6 +81,17 @@ namespace server.data
                 .Include(o => o.Users)
                 .ToListAsync();
             return organizations;
+		}
+
+		public async Task<IEnumerable<Organization>> GetOrganizationsByUser(int userId)
+		{
+			var ous = await _context.OrganizationUsers.Where(ou => ou.UserId == userId).ToListAsync();
+            var orgs = new List<Organization>();
+            foreach (var ou in ous)
+            {
+                orgs.Add(await GetOrganization(ou.OrganizationId));
+            }
+            return orgs;
 		}
 	}
 }

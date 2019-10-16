@@ -24,6 +24,7 @@ namespace server.data
         Task<bool> DeleteOrganization(Organization organization);
         Task<bool> OrganizationExist(string name);
         Task<Organization> GetOrganization(int Id);
+        Task<IEnumerable<Organization>> GetOrganizationsByUser(int id);
         Task<IEnumerable<Organization>> GetOrganizations();
     }
 }

@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using server.data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace server
 {
@@ -54,6 +55,7 @@ namespace server
                     ValidateAudience = false,
                 };
             });
+            services.AddAutoMapper(typeof(OrganizationRepository).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
