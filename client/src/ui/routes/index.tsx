@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import NavBar from '../components/NavBar';
