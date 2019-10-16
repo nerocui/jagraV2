@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { State } from '../../models';
 import { Login } from '../../action';
 import { Link } from 'react-router-dom';
+import {Fabric} from 'office-ui-fabric-react/lib/Fabric';
+
 
 const LoginPage = (props: any) => {
 	const [username, SetUsername] = useState('');
@@ -21,14 +23,14 @@ const LoginPage = (props: any) => {
 		SetPassword('');
 	};
 	return (
-		<div>
+		<Fabric>
 			<form onSubmit={OnSubmit}>
 				<input value={username} onChange={OnChangeUsername} />
 				<input value={password} onChange={OnChangePassword} type="password"/>
 				<button type="submit">Login</button>
 			</form>
 			<Link to="/signup">Signup</Link>
-		</div>
+		</Fabric>
 	);
 };
 
