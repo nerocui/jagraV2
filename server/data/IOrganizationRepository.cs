@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using server.Models;
 
@@ -21,5 +22,8 @@ namespace server.data
         Task<User> AddUser(Organization organization, User user);
         Task<User> RemoveUser(Organization organization, User user);
         Task<bool> DeleteOrganization(Organization organization);
+        Task<bool> OrganizationExist(string name);
+        Task<Organization> GetOrganization(int Id);
+        Task<IEnumerable<Organization>> GetOrganizations();
     }
 }
