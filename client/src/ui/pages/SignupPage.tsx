@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../models';
-import { Login } from '../../action';
-import { Link } from 'react-router-dom';
+import { Register } from '../../utils/AuthService';
+import { Link, withRouter } from 'react-router-dom';
 
-const LoginPage = (props: any) => {
+const SignupPage = (props: any) => {
 	const [username, SetUsername] = useState('');
 	const [password, SetPassword] = useState('');
 	const OnChangeUsername = (e: any) => {
@@ -16,18 +16,19 @@ const LoginPage = (props: any) => {
 	const OnSubmit = (e: any) => {
 		e.preventDefault();
 
-		props.Login(username, password);
+		Register(username, password);
 		SetUsername('');
-		SetPassword('');
+        SetPassword('');
+        props.history.push('/');
 	};
 	return (
 		<div>
 			<form onSubmit={OnSubmit}>
 				<input value={username} onChange={OnChangeUsername} />
 				<input value={password} onChange={OnChangePassword} type="password"/>
-				<button type="submit">Login</button>
+				<button type="submit">Register</button>
 			</form>
-			<Link to="/signup">Signup</Link>
+			<Link to="/">Login</Link>
 		</div>
 	);
 };
@@ -39,4 +40,6 @@ function MapStateToProps(state: State) {
 	};
 }
 
-export default connect(MapStateToProps, {Login})(LoginPage);
+const SignupPageWithRouter = withRouter(SignupPage);
+
+export default connect(MapStateToProps)(SignupPageWithRouter);
