@@ -8,6 +8,11 @@ export type AuthState = {
 	loggedIn: boolean,
 };
 
+export type ThemeState = {
+	theme: string;
+};
+
 export type State = {
 	AuthState: AuthState,
+	ThemeState: ThemeState,
 };
