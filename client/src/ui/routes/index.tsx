@@ -6,19 +6,18 @@ import NavBar from '../components/NavBar';
 import LoginPage from '../pages/LoginPage';
 import Dashboard from '../pages/DashboardPage';
 import SignupPage from '../pages/SignupPage';
-import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 
 const routes = () => {
 	return (
 		<Router>
-			<Fabric>
+			<div className='router-wrapper'>
 				<NavBar />
 				<Switch>
 					<PublicRoute path='/' exact component={LoginPage} />
 					<PublicRoute path='/signup' exact component={SignupPage} />
 					<PrivateRoute path='/dashboard' component={Dashboard} />
 				</Switch>
-			</Fabric>
+			</div>
 		</Router>
 	);
 };

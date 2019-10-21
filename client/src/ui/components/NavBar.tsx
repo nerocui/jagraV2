@@ -10,9 +10,7 @@ const NavBar = (props: any) => {
 			<CommandBar />
 		);
 	} else {
-		return (
-			<LandingBar />
-		);
+		return <React.Fragment />;
 	}
 };
 

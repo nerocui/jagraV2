@@ -4,6 +4,10 @@ import { State } from '../../models';
 import { Register } from '../../utils/AuthService';
 import { Link, withRouter } from 'react-router-dom';
 import {Fabric} from 'office-ui-fabric-react/lib/Fabric';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { Label } from 'office-ui-fabric-react/lib/Label';
+import useStyles from '../../style/login';
 
 const SignupPage = (props: any) => {
 	const [username, SetUsername] = useState('');
@@ -22,14 +26,19 @@ const SignupPage = (props: any) => {
         SetPassword('');
         props.history.push('/');
 	};
+	const classes = useStyles();
 	return (
-		<Fabric>
-			<form onSubmit={OnSubmit}>
-				<input value={username} onChange={OnChangeUsername} />
-				<input value={password} onChange={OnChangePassword} type="password"/>
-				<button type="submit">Register</button>
-			</form>
-			<Link to="/">Login</Link>
+		<Fabric className={classes.root}>
+			<div className={classes.formBox}>
+				<form onSubmit={OnSubmit}>
+					<Label>User name</Label>
+					<TextField value={username} onChange={OnChangeUsername} />
+					<Label>Password</Label>
+					<TextField value={password} onChange={OnChangePassword} type="password"/>
+					<PrimaryButton className={classes.gap} type="submit">Register</PrimaryButton>
+				</form>
+				<Link to="/">Login</Link>
+			</div>
 		</Fabric>
 	);
 };
