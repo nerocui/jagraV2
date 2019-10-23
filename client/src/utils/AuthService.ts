@@ -21,3 +21,21 @@ export function IsLoggedIn(token=localStorage.getItem('token') || ''): boolean {
 		return false;
 	}
 }
+
+export function GetUserObject(token=localStorage.getItem('token') || '') {
+	try {
+		const decoded = JwtDecode(token);
+		console.log('Decoded: ', decoded);
+		return decoded;
+	} catch (e) {
+		console.log('Failed to decode user token', e);
+		return {};
+	}
+}
+
+export function CreateNewOrganization(name: string) {
+	const user: any = GetUserObject();
+	if (user && user != {}) {
+		Axios.post('https://localhost:5001/api/organization/create', {name, userId: user.nameid})
+	}
+}

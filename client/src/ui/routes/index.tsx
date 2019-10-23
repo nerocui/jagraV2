@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar';
 import LoginPage from '../pages/LoginPage';
 import Dashboard from '../pages/DashboardPage';
 import SignupPage from '../pages/SignupPage';
+import OrganizationEditor from '../pages/OrganizationEditor';
 
 const routes = () => {
 	return (
@@ -16,6 +17,8 @@ const routes = () => {
 					<PublicRoute path='/' exact component={LoginPage} />
 					<PublicRoute path='/signup' exact component={SignupPage} />
 					<PrivateRoute path='/dashboard' component={Dashboard} />
+					<PrivateRoute path='/organizations/new' component={OrganizationEditor} />
+					
 				</Switch>
 			</div>
 		</Router>
