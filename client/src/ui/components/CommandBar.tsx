@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { Logout, ToggleTheme } from '../../action';
@@ -76,7 +76,9 @@ const CommandNavBar = (props: any) => {
 			iconProps: {
 				iconName: 'Sunny',
 			},
-			onClick: props.ToggleTheme
+			onClick: () => {
+				props.ToggleTheme();
+			}
 		},
 		{
 		  key: 'logout',
@@ -93,7 +95,7 @@ const CommandNavBar = (props: any) => {
 			<CommandBar
 				items={items}
 				farItems={farItems}
-				ariaLabel={'Use left and right arrow keys to navigate between commands'}
+				ariaLabel={'Use left and right arrow keys to navigate between commands.'}
 			/>
 		</Fabric>
 	);
