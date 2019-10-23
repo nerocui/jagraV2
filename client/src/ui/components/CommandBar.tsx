@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import { Logout } from '../../action';
+import { Logout, ToggleTheme } from '../../action';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
@@ -70,6 +70,15 @@ const CommandNavBar = (props: any) => {
 
 	const farItems = [
 		{
+			key: 'theme',
+			name: 'Theme',
+			ariaLabel: 'Theme',
+			iconProps: {
+				iconName: 'Sunny',
+			},
+			onClick: props.ToggleTheme
+		},
+		{
 		  key: 'logout',
 		  name: 'Logout',
 		  ariaLabel: 'Logout',
@@ -90,7 +99,7 @@ const CommandNavBar = (props: any) => {
 	);
 };
 
-const ConnectedCommandBar = connect(null, {Logout})(CommandNavBar);
+const ConnectedCommandBar = connect(null, {Logout, ToggleTheme})(CommandNavBar);
 
 export default withRouter(({ history }) => (
 	<ConnectedCommandBar history={history} />

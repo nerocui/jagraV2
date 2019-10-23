@@ -6,3 +6,4 @@
 **.db**
 **appsettings.json
 **wwwroot
+client/package-lock.json

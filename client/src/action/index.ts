@@ -15,6 +15,13 @@ function DispatchLogout() {
 	};
 }
 
+function SetTheme(theme: string) {
+	return {
+		type: TYPE.SET_THEME,
+		payload: theme,
+	};
+}
+
 export function Login(username: string, password: string) {
 	return (dispatch: any) => {
 		Axios.post('https://localhost:5001/api/auth/login', {username, password})
@@ -34,4 +41,17 @@ export function Logout() {
 		localStorage.setItem('token', '');
 		dispatch(DispatchLogout());
 	};
+}
+
+export function ToggleTheme() {
+	return (dispatch: any) => {
+		const theme = localStorage.getItem('theme');
+		if (theme === 'light') {
+			localStorage.setItem('theme', 'dark');
+			dispatch(SetTheme('dark'));
+		} else {
+			localStorage.setItem('theme', 'light');
+			dispatch(SetTheme('light'));
+		}
+	}
 }

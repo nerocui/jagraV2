@@ -37,5 +37,11 @@ export function CreateNewOrganization(name: string) {
 	const user: any = GetUserObject();
 	if (user && user != {}) {
 		Axios.post('https://localhost:5001/api/organization/create', {name, userId: user.nameid})
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 }
