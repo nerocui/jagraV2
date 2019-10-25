@@ -76,9 +76,7 @@ const CommandNavBar = (props: any) => {
 			iconProps: {
 				iconName: 'Sunny',
 			},
-			onClick: () => {
-				props.ToggleTheme();
-			}
+			onClick: props.ToggleTheme
 		},
 		{
 		  key: 'logout',
