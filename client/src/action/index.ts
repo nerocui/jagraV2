@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import TYPE from './type';
 import { loadTheme } from 'office-ui-fabric-react/lib/Styling';
+import { GetRootURL } from '../utils/DomainService';
+
 
 function DispatchLogin(token: string) {
 	return {
@@ -25,7 +27,7 @@ function SetTheme(theme: string) {
 
 export function Login(username: string, password: string) {
 	return (dispatch: any) => {
-		Axios.post('https://localhost:5001/api/auth/login', {username, password})
+		Axios.post(GetRootURL() + '/api/auth/login', {username, password})
 			.then(res => {
 				const { token } = res.data;
 				localStorage.setItem('token', token);
