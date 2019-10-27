@@ -53,6 +53,7 @@ namespace server
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<IInvitationRepository, InvitationRepository>();
             
             services.AddSwaggerGen(c =>
             {

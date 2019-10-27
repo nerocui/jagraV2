@@ -48,11 +48,6 @@ namespace server.data
 			throw new System.NotImplementedException();
 		}
 
-		public Task<bool> InviteUser(Organization organization, User user)
-		{
-			throw new System.NotImplementedException();
-		}
-
 		public Task<User> RemoveUser(Organization organization, User user)
 		{
 			throw new System.NotImplementedException();
@@ -66,6 +61,15 @@ namespace server.data
             }
             return false;
 		}
+
+        public async Task<bool> OrganizationExist(int id)
+        {
+            if (await _context.Organizations.AnyAsync(x => x.Id == id))
+            {
+                return true;
+            }
+            return false;
+        }
 
 		public async Task<Organization> GetOrganization(int Id)
 		{
@@ -93,5 +97,15 @@ namespace server.data
             }
             return orgs;
 		}
-	}
+
+        public async Task<bool> IsAdmin(Organization organization, User user)
+        {
+            var relationship = await _context.OrganizationUsers.FirstOrDefaultAsync(r => r.OrganizationId == organization.Id && r.UserId == user.Id);
+            if (relationship.Role == "Admin")
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 }

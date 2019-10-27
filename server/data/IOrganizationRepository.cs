@@ -10,12 +10,6 @@ namespace server.data
         * Creates an organization with the given organization model, user is admin
         */
         Task<Organization> Create(Organization organization, User user);
-        /*
-        * Controller will check is the user is the admin
-        * Invite the user to join the organization
-        * Sends out an notification to the user
-        */
-        Task<bool> InviteUser(Organization organization, User user);
         /**
         * After the user click join, they will be added to the organization by this function
         */
@@ -23,6 +17,8 @@ namespace server.data
         Task<User> RemoveUser(Organization organization, User user);
         Task<bool> DeleteOrganization(Organization organization);
         Task<bool> OrganizationExist(string name);
+        Task<bool> OrganizationExist(int id);
+        Task<bool> IsAdmin(Organization organization, User user);
         Task<Organization> GetOrganization(int Id);
         Task<IEnumerable<Organization>> GetOrganizationsByUser(int id);
         Task<IEnumerable<Organization>> GetOrganizations();

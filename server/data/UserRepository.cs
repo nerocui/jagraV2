@@ -37,5 +37,14 @@ namespace server.data
                 .ToListAsync();
             return users;
 		}
-	}
+
+        public async Task<bool> UserExist(int id)
+        {
+            if (await _context.Users.AnyAsync(x => x.Id == id))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 }

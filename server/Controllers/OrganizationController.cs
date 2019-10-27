@@ -15,16 +15,18 @@ namespace server.Controllers
 	public class OrganizationController : ControllerBase
 	{
 		private readonly IOrganizationRepository _repo;
-		private readonly IConfiguration _config;
+        private readonly IInvitationRepository _invitations;
+        private readonly IConfiguration _config;
 		private readonly IUserRepository _users;
 		private readonly IMapper _mapper;
-		public OrganizationController(IOrganizationRepository repo, IUserRepository users, IConfiguration config, IMapper mapper)
+		public OrganizationController(IOrganizationRepository repo, IInvitationRepository invitations, IUserRepository users, IConfiguration config, IMapper mapper)
 		{
 			_mapper = mapper;
 			_users = users;
 			_config = config;
 			_repo = repo;
-		}
+            _invitations = invitations;
+        }
 
 		[HttpPost("create")]
 		public async Task<IActionResult> Create(OrganizationForCreationDto orgdto)
@@ -73,5 +75,30 @@ namespace server.Controllers
             }
 			return Ok(orgsToReturn);
 		}
+
+        [HttpPost("invite")]
+        public async Task<IActionResult> InviteUser(InvitationForCreationDto invitationForCreation)
+        {
+            if (!await _users.UserExist(invitationForCreation.UserId) || !await _users.UserExist(invitationForCreation.InvitorId) || !await _repo.OrganizationExist(invitationForCreation.OrganizationId))
+            {
+                return BadRequest("Invalid Data");
+            }
+            var inviter = await _users.GetUser(invitationForCreation.InvitorId);
+            var user = await _users.GetUser(invitationForCreation.UserId);
+            var organization = await _repo.GetOrganization(invitationForCreation.OrganizationId);
+            if (!await _repo.IsAdmin(organization, inviter))
+            {
+                return BadRequest("Not Authorized To Invite New Member");
+            }
+            Invitation invitation = new Invitation
+            {
+                User = user,
+                Organization = organization,
+                UserId = user.Id,
+                OrganizationId = organization.Id
+            };
+            await _invitations.Add(invitation);
+            return Ok(invitation);
+        }
 	}
 }
