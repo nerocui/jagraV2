@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using server.Models;
+using Task = server.Models.Task;
 
 namespace server.data
 {
@@ -10,37 +11,37 @@ namespace server.data
 		{
 			_context = context;
 		}
-		public Task<Models.Task> Add(Models.Task task)
+		public Task<Task> Add(Task task)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Models.Task> Assign(Models.Task task, User user)
+		public Task<Task> Assign(Task task, User user)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Models.Task> Delete(Models.Task task)
+		public Task<Task> Delete(Task task)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Models.Task> Modify(Models.Task task)
+		public Task<Task> Modify(Task task)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Models.Task> Unassign(Models.Task task)
+		public Task<Task> Unassign(Task task)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Models.Task> Unwatch(Models.Task task, User user)
+		public Task<Task> Unwatch(Task task, User user)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Models.Task> Watch(Models.Task task, User user)
+		public Task<Task> Watch(Task task, User user)
 		{
 			throw new System.NotImplementedException();
 		}
