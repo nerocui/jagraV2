@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
@@ -37,6 +38,19 @@ namespace server.data
                 .ToListAsync();
             return users;
 		}
+
+        public async Task<IEnumerable<User>> GetUsersByOrganization(int organizationId)
+        {
+            var ous = await _context.OrganizationUsers
+                .Where(ou => ou.OrganizationId == organizationId)
+                .ToListAsync();
+            var users = new List<User>();
+            foreach (var ou in ous)
+            {
+                users.Add(await GetUser(ou.UserId));
+            }
+            return users;
+        }
 
         public async Task<bool> UserExist(int id)
         {

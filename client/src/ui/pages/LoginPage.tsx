@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../models';
 import { Login } from '../../action';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
@@ -24,6 +24,7 @@ const LoginPage = (props: any) => {
 		props.Login(username, password);
 		SetUsername('');
 		SetPassword('');
+		props.history.push('loading');
 	};
 
 	const classes = useStyles();
@@ -50,4 +51,6 @@ function MapStateToProps(state: State) {
 	};
 }
 
-export default connect(MapStateToProps, {Login})(LoginPage);
+const LoginPageWithRouter = withRouter(LoginPage);
+
+export default connect(MapStateToProps, {Login})(LoginPageWithRouter);

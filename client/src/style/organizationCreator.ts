@@ -4,17 +4,17 @@ const useStyles = createUseStyles({
 	root: {
 		position: 'relative',
 		width: '100%',
-		height: '100%',
+		height: 'calc(100% - 44px)',
 	},
 	formBox: {
 		position: 'absolute',
-		top: '50%',
+		top: (props: any) => props.isMobile ? '30%' : '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		boxSizing: 'border-box',
-		width: '40rem',
+		width: (props: any) => props.isMobile ? '90%' : '40rem',
 		padding: '2rem',
-		backgroundColor: 'black',
+		backgroundColor: (props: any) => props.theme === 'dark' ? 'black' : '#e0e0e0',
 		borderRadius: '.4rem',
 	},
 	gap: {

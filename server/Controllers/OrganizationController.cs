@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,30 +49,51 @@ namespace server.Controllers
 		public async Task<IActionResult> GetOrganization(int id)
 		{
 			var org = await _repo.GetOrganization(id);
+            var orgToReturn = _mapper.Map<OrganizationForListDto>(org);
+            var usersToReturn = new List<UserForListDto>();
+            var invitationsToReturn = new List<InvitationForListDto>();
 			foreach (var ou in org.Users)
 			{
-				ou.User = await _users.GetUser(ou.UserId);
+				usersToReturn.Add(_mapper.Map<UserForListDto>(await _users.GetUser(ou.UserId)));
 			}
-			return Ok(org);
+            foreach (var invitation in org.Invitations)
+            {
+                var inv = _mapper.Map<InvitationForListDto>(invitation);
+                inv.User = _mapper.Map<UserForListDto>(await _users.GetUser(invitation.UserId));
+                invitationsToReturn.Add(inv);
+            }
+            orgToReturn.Invitations = invitationsToReturn;
+            orgToReturn.Users = usersToReturn;
+			return Ok(orgToReturn);
 		}
 
 		[HttpGet("byuser")]
 		public async Task<IActionResult> GetOrganizationsByUser(int userId)
 		{
 			var orgs = await _repo.GetOrganizationsByUser(userId);
-            var orgsDto = _mapper.Map<IEnumerable<OrganizationForListDto>>(orgs);
-			var zippedOrgs = orgs.Zip(orgsDto, (o, d) => new {Organization = o, OrganizationForCreationDto = d});
+            //             var orgsDto = _mapper.Map<IEnumerable<OrganizationForListDto>>(orgs);
+            // 			var zippedOrgs = orgs.Zip(orgsDto, (o, d) => new {Organization = o, OrganizationForCreationDto = d});
+            //             var orgsToReturn = new List<OrganizationForListDto>();
+            //             foreach (var zip in zippedOrgs)
+            //             {
+            //                 zip.OrganizationForCreationDto.Users = new List<UserForListDto>();
+            //                 foreach (var ou in zip.Organization.Users)
+            //                 {
+            //                     var user = await _users.GetUser(ou.UserId);
+            //                     var userDto = _mapper.Map<UserForListDto>(user);
+            //                     zip.OrganizationForCreationDto.Users.Add(userDto);
+            //                 }
+            //                 orgsToReturn.Add(zip.OrganizationForCreationDto);
+            //             }
             var orgsToReturn = new List<OrganizationForListDto>();
-            foreach (var zip in zippedOrgs)
+            foreach (var org in orgs)
             {
-                zip.OrganizationForCreationDto.Users = new List<UserForListDto>();
-                foreach (var ou in zip.Organization.Users)
-                {
-                    var user = await _users.GetUser(ou.UserId);
-                    var userDto = _mapper.Map<UserForListDto>(user);
-                    zip.OrganizationForCreationDto.Users.Add(userDto);
-                }
-                orgsToReturn.Add(zip.OrganizationForCreationDto);
+                var orgToReturn = _mapper.Map<OrganizationForListDto>(org);
+                var usersToReturn = _mapper.Map<List<UserForListDto>>(await _users.GetUsersByOrganization(org.Id));
+                var invitationsToReturn = _mapper.Map<List<InvitationForListDto>>(org.Invitations);
+                orgToReturn.Users = usersToReturn;
+                orgToReturn.Invitations = invitationsToReturn;
+                orgsToReturn.Add(orgToReturn);
             }
 			return Ok(orgsToReturn);
 		}
@@ -90,6 +112,10 @@ namespace server.Controllers
             {
                 return BadRequest("Not Authorized To Invite New Member");
             }
+            if (await _invitations.InvitationExist(organization.Id, user.Id))
+            {
+                return Conflict("Invitation Already Exist");
+            }
             Invitation invitation = new Invitation
             {
                 User = user,
@@ -98,7 +124,42 @@ namespace server.Controllers
                 OrganizationId = organization.Id
             };
             await _invitations.Add(invitation);
-            return Ok(invitation);
+            //TODO, return list of all invitations that belong to this organization
+            var invitations = await _invitations.GetInvitationsByOrganization(organization.Id);
+            var invitationsToReturn = new List<InvitationForListDto>();
+            foreach (var item in invitations)
+            {
+                var invitationToReturn = new InvitationForListDto
+                {
+                    Organization = _mapper.Map<OrganizationForListDto>(item.Organization),
+                    User = _mapper.Map<UserForListDto>(item.User)
+                };
+                invitationsToReturn.Add(invitationToReturn);
+            }
+            return Ok(invitationsToReturn);
+        }
+
+        [HttpGet("invites")]
+        public async Task<IActionResult> GetInvitations(int id)
+        {
+            if (!await _repo.OrganizationExist(id))
+            {
+                return BadRequest("Organization does not exist");
+            }
+            var invitations = await _invitations.GetInvitationsByOrganization(id);
+            Console.WriteLine(invitations);
+            var invitationsToReturn = new List<InvitationForListDto>();
+            foreach (var item in invitations)
+            {
+                var invitationToReturn = new InvitationForListDto
+                {
+                    Organization = _mapper.Map<OrganizationForListDto>(item.Organization),
+                    User = _mapper.Map<UserForListDto>(item.User)
+                };
+                invitationsToReturn.Add(invitationToReturn);
+            }
+            Console.WriteLine(invitationsToReturn);
+            return Ok(invitationsToReturn);
         }
 	}
 }

@@ -75,6 +75,7 @@ namespace server.data
 		{
 			var organization = await _context.Organizations
                 .Include(o => o.Users)
+                .Include(o => o.Invitations)
                 .FirstOrDefaultAsync(o => o.Id == Id);
             return organization;
 		}
@@ -83,13 +84,16 @@ namespace server.data
 		{
 			var organizations = await _context.Organizations
                 .Include(o => o.Users)
+                .Include(o => o.Invitations)
                 .ToListAsync();
             return organizations;
 		}
 
 		public async Task<IEnumerable<Organization>> GetOrganizationsByUser(int userId)
 		{
-			var ous = await _context.OrganizationUsers.Where(ou => ou.UserId == userId).ToListAsync();
+			var ous = await _context.OrganizationUsers
+                .Where(ou => ou.UserId == userId)
+                .ToListAsync();
             var orgs = new List<Organization>();
             foreach (var ou in ous)
             {

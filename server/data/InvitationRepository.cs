@@ -43,5 +43,25 @@ namespace server.data
                 return false;
             }
         }
+
+        public async Task<IEnumerable<Invitation>> GetInvitationsByOrganization(int organizationId)
+        {
+            var invitations = await _context.Invitations
+                .Where(i => i.OrganizationId == organizationId)
+                .Include(i => i.Organization)
+                .Include(i => i.User)
+                .ToListAsync();
+            return invitations;
+        }
+
+        public async Task<IEnumerable<Invitation>> GetInvitationsByUser(int userId)
+        {
+            var invitations = await _context.Invitations
+                .Where(i => i.UserId == userId)
+                .Include(i => i.Organization)
+                .Include(i => i.User)
+                .ToListAsync();
+            return invitations;
+        }
     }
 }

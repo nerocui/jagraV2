@@ -4,8 +4,11 @@ import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import useStyle from '../../style/organizationCreator';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
+import { useMediaQuery } from 'react-responsive';
+import { connect } from 'react-redux';
+import { State } from '../../models';
 
-const OrganizationCreator = () => {
+const OrganizationCreator = (props: any) => {
 	const [name, SetName] = useState('');
 	const OnChangeName = (e:any) => {
 		SetName(e.target.value);
@@ -15,7 +18,10 @@ const OrganizationCreator = () => {
 		CreateNewOrganization(name);
 		SetName('');
 	};
-	const classes = useStyle();
+	const isMobile = useMediaQuery({
+		query: '(max-width: 650px)',
+	});
+	const classes = useStyle({theme: props.theme, isMobile});
 	return (
 		<Fabric className={classes.root}>
 			<div className={classes.formBox}>
@@ -29,4 +35,10 @@ const OrganizationCreator = () => {
 	);
 };
 
-export default OrganizationCreator;
+function mapStateToProps(state: State) {
+	return {
+		theme: state.ThemeState.theme,
+	};
+}
+
+export default connect(mapStateToProps)(OrganizationCreator);

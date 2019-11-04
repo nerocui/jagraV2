@@ -10,8 +10,10 @@ namespace server.Helpers
         public AutoMapperProfile()
         {
             CreateMap<User, UserForListDto>();
+            CreateMap<Invitation, InvitationForListDto>();
             CreateMap<Organization, OrganizationForListDto>()
-                .ForMember(x => x.Users, opt => opt.Ignore());
+                .ForMember(x => x.Users, opt => opt.Ignore())
+                .ForMember(x => x.Invitations, opt => opt.Ignore());
         }
     }
 }
