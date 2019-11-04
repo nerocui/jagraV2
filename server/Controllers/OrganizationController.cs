@@ -90,7 +90,7 @@ namespace server.Controllers
             {
                 var orgToReturn = _mapper.Map<OrganizationForListDto>(org);
                 var usersToReturn = _mapper.Map<List<UserForListDto>>(await _users.GetUsersByOrganization(org.Id));
-                var invitationsToReturn = _mapper.Map<List<InvitationForListDto>>(org.Invitations);
+                var invitationsToReturn = _mapper.Map<List<InvitationForListDto>>(await _invitations.GetInvitationsByOrganization(org.Id));
                 orgToReturn.Users = usersToReturn;
                 orgToReturn.Invitations = invitationsToReturn;
                 orgsToReturn.Add(orgToReturn);
