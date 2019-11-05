@@ -71,20 +71,6 @@ namespace server.Controllers
 		public async Task<IActionResult> GetOrganizationsByUser(int userId)
 		{
 			var orgs = await _repo.GetOrganizationsByUser(userId);
-            //             var orgsDto = _mapper.Map<IEnumerable<OrganizationForListDto>>(orgs);
-            // 			var zippedOrgs = orgs.Zip(orgsDto, (o, d) => new {Organization = o, OrganizationForCreationDto = d});
-            //             var orgsToReturn = new List<OrganizationForListDto>();
-            //             foreach (var zip in zippedOrgs)
-            //             {
-            //                 zip.OrganizationForCreationDto.Users = new List<UserForListDto>();
-            //                 foreach (var ou in zip.Organization.Users)
-            //                 {
-            //                     var user = await _users.GetUser(ou.UserId);
-            //                     var userDto = _mapper.Map<UserForListDto>(user);
-            //                     zip.OrganizationForCreationDto.Users.Add(userDto);
-            //                 }
-            //                 orgsToReturn.Add(zip.OrganizationForCreationDto);
-            //             }
             var orgsToReturn = new List<OrganizationForListDto>();
             foreach (var org in orgs)
             {
