@@ -12,3 +12,6 @@ A task management service for any organization.
 - Multi Tenancy
 - Organization/Task Management
 - Dark Mode
+
+## Screenshots
+![List of Organizations](https://github.com/nerocui/jagraV2/blob/master/screenshots/orgs.png)
