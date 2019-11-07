@@ -7,9 +7,7 @@ import OrganizationList from '../components/OrganizationList';
 const OrganizationsPage = (props: any) => {
     props.FetchOrganizationsByUser(props.id);
     return (
-        <div>
-            <OrganizationList />
-        </div>
+        <OrganizationList />
     );
 };
 

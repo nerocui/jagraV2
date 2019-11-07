@@ -3,6 +3,7 @@ import {createUseStyles} from 'react-jss';
 const useStyles = createUseStyles({
 	root: {
         height: '8rem',
+        float: 'left',
         width: '14rem',
         borderRadius: '1rem',
         padding: '1rem',
