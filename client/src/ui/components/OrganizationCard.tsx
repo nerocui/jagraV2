@@ -1,9 +1,11 @@
 import React from 'react';
+import useStyle from '../../style/organizationCard';
 
-const OrganizationCard = () => {
+const OrganizationCard = (props: any) => {
+    const classes = useStyle();
     return (
-        <div>
-            organization
+        <div className={classes.root}>
+            <h2>{props.name}</h2>
         </div>
     );
 };

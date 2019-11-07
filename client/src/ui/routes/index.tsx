@@ -10,6 +10,7 @@ import SignupPage from '../pages/SignupPage';
 import OrganizationCreator from '../pages/OrganizationCreator';
 import { State } from '../../models';
 import LoadingPage from '../pages/LoadingPage';
+import OrganizationsPage from '../pages/OrganizationsPage';
 
 const routes = (props: any) => {
 	return (
@@ -19,8 +20,9 @@ const routes = (props: any) => {
 				<Switch>
 					<PublicRoute path='/' exact component={LoginPage} />
 					<PublicRoute path='/signup' exact component={SignupPage} />
-					<PrivateRoute path='/dashboard' component={Dashboard} />
-					<PrivateRoute path='/organizations/new' component={OrganizationCreator} />
+					<PrivateRoute path='/dashboard' exact component={Dashboard} />
+					<PrivateRoute path='/organizations/new' exact component={OrganizationCreator} />
+					<PrivateRoute path='/organizations' exact component={OrganizationsPage} />
 					<PublicRoute path='/loading' component={LoadingPage} />
 				</Switch>
 			</div>

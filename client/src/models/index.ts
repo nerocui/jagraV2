@@ -4,37 +4,44 @@ export type Action = {
 };
 
 export type AuthState = {
+	id: number,
+	username: string,
 	token: string,
 	loggedIn: boolean,
 };
 
 export type ThemeState = {
-	theme: string;
+	theme: string,
+};
+
+export type OrganizationState = {
+	organizations: Array<Organization>,
 };
 
 export type State = {
 	AuthState: AuthState,
 	ThemeState: ThemeState,
+	OrganizationState: OrganizationState,
 };
 
 export type Organization = {
-	Id: number,
-	Name: string,
-	Users: Array<User>,
-	Invitations: Array<Invitation>
+	id: number,
+	name: string,
+	users: Array<User>,
+	invitations: Array<Invitation>
 };
 
 export type Invitation = {
-	OrganizationId: number,
-	UserId: number,
+	organizationId: number,
+	userId: number,
 };
 
 export type User = {
-	Id: number,
-	Username: string,
-	Email: string,
-	Create: Date,
-	KnownAs: string,
+	id: number,
+	username: string,
+	email: string,
+	created: Date,
+	knownAs: string,
 }
 
 

@@ -25,6 +25,25 @@ function SetTheme(theme: string) {
 	};
 }
 
+function SetOrganizations(organizations: Array<any>) {
+	return {
+		type: TYPE.SET_ORGANIZATIONS,
+		payload: organizations,
+	};
+}
+
+export function FetchOrganizationsByUser(userId: number) {
+	return (dispatch: any) => {
+		Axios.get(GetRootURL() + '/api/organization/byuser?userId=' + userId.toString())
+			.then(res => {
+				dispatch(SetOrganizations(res.data));
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+}
+
 export function Login(username: string, password: string) {
 	return (dispatch: any) => {
 		Axios.post(GetRootURL() + '/api/auth/login', {username, password})

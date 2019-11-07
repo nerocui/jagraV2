@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import { Logout, ToggleTheme } from '../../action';
+import { Logout, ToggleTheme, FetchOrganizationsByUser } from '../../action';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
@@ -55,7 +55,7 @@ const CommandNavBar = (props: any) => {
 		  iconProps: {
 			iconName: 'Org'
 		  },
-		  href: 'https://dev.office.com/fabric',
+		  onClick: () => props.history.push('/organizations'),
 		  ['data-automation-id']: 'uploadButton'
 		},
 		{

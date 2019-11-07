@@ -12,14 +12,26 @@ import { Provider } from 'react-redux';
 import { IsLoggedIn } from './utils/AuthService';
 import { loadTheme } from 'office-ui-fabric-react/lib/Styling';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
+import { initialOrganizationState } from './reducer/OrganizationReducer';
+import JwtDecode from 'jwt-decode';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
 
 function GetInitialState(theme: string): State {
 	const token: string = localStorage.getItem('token') || '';
+	let id: number = 0;
+	let username: string = '';
+	const loggedIn = IsLoggedIn(token);
+	if (loggedIn) {
+		const decoded:any = JwtDecode(token);
+		id = parseInt(decoded.nameid);
+		username = decoded.unique_name;
+	}
 	const AuthState: AuthState = {
+		id,
+		username,
 		token,
-		loggedIn: IsLoggedIn(token),
+		loggedIn,
 	};
 	const ThemeState: ThemeState = {
 		theme: theme
@@ -27,6 +39,7 @@ function GetInitialState(theme: string): State {
 	return {
 		AuthState,
 		ThemeState,
+		OrganizationState: initialOrganizationState,
 	};
 }
 
