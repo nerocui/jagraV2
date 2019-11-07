@@ -22,5 +22,6 @@ namespace server.data
         Task<Organization> GetOrganization(int Id);
         Task<IEnumerable<Organization>> GetOrganizationsByUser(int id);
         Task<IEnumerable<Organization>> GetOrganizations();
+        Task<Organization> UpdateOrganization(Organization org);
     }
 }

@@ -6,6 +6,7 @@ namespace server.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Color { get; set; }
         public ICollection<OrganizationUser> Users { get; set; }
         public ICollection<Invitation> Invitations { get; set; }
     }

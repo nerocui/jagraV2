@@ -147,5 +147,18 @@ namespace server.Controllers
             Console.WriteLine(invitationsToReturn);
             return Ok(invitationsToReturn);
         }
+
+        [HttpPost("color")]
+        public async Task<IActionResult> ChangeOrganizationColor(int id, string color)
+        {
+            if (!await _repo.OrganizationExist(id))
+            {
+                return BadRequest("Organization does not exist.");
+            }
+            var org = await _repo.GetOrganization(id);
+            org.Color = color;
+            await _repo.UpdateOrganization(org);
+            return Ok(org);
+        }
 	}
 }

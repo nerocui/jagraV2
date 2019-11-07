@@ -111,5 +111,12 @@ namespace server.data
             }
             return false;
         }
+
+        public async Task<Organization> UpdateOrganization(Organization org)
+        {
+            _context.Organizations.Update(org);
+            await _context.SaveChangesAsync();
+            return org;
+        }
     }
 }

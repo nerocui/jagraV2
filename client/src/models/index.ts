@@ -27,6 +27,7 @@ export type State = {
 export type Organization = {
 	id: number,
 	name: string,
+	color: string,
 	users: Array<User>,
 	invitations: Array<Invitation>
 };
