@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
         border: '1px solid white',
     },
     taskListTablet: {
-        width: '80%',
+        width: '75%',
         border: '1px solid white',
     },
     taskListPhone: {
@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
         border: '1px solid white',
     },
     pivotTablet: {
-        width: '20%',
+        width: '25%',
         border: '1px solid white',
     },
 });
