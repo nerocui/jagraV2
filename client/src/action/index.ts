@@ -32,6 +32,25 @@ function SetOrganizations(organizations: Array<any>) {
 	};
 }
 
+function SetOrganization(org: any) {
+	return {
+		type: TYPE.SET_ORGANIZATION,
+		payload: org,
+	};
+}
+
+export function FetchOrganizationById(id: number) {
+	return (dispatch: any) => {
+		Axios.get(GetRootURL() + '/api/organization/' + id.toString())
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+}
+
 export function FetchOrganizationsByUser(userId: number) {
 	return (dispatch: any) => {
 		Axios.get(GetRootURL() + '/api/organization/byuser?userId=' + userId.toString())

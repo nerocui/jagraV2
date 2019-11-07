@@ -11,6 +11,7 @@ import OrganizationCreator from '../pages/OrganizationCreator';
 import { State } from '../../models';
 import LoadingPage from '../pages/LoadingPage';
 import OrganizationsPage from '../pages/OrganizationsPage';
+import OrganizationDetailPage from '../pages/OrganizationDetailPage';
 
 const routes = (props: any) => {
 	return (
@@ -23,6 +24,7 @@ const routes = (props: any) => {
 					<PrivateRoute path='/dashboard' exact component={Dashboard} />
 					<PrivateRoute path='/organizations/new' exact component={OrganizationCreator} />
 					<PrivateRoute path='/organizations' exact component={OrganizationsPage} />
+					<PrivateRoute path='/organization/:id' exact component={OrganizationDetailPage} />
 					<PublicRoute path='/loading' component={LoadingPage} />
 				</Switch>
 			</div>

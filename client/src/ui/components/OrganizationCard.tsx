@@ -1,6 +1,8 @@
 import React from 'react';
 import useStyle from '../../style/organizationCard';
 import { hexToRgb } from '../../utils/StringUtils';
+import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import { withRouter } from "react-router-dom";
 
 const OrganizationCard = (props: any) => {
     let { color } = props;
@@ -17,11 +19,17 @@ const OrganizationCard = (props: any) => {
     };
     const gradientString: string = 'linear-gradient(90deg, rgba(' +colorObj.r.toString() + ',' + colorObj.g.toString() + ',' + colorObj.b.toString() + ', 1) 0%, rgba(' + gradient.r.toString() + ',' + gradient.g.toString() + ',' + gradient.b.toString() + ', 1) 100%)';
     const classes = useStyle({backgroundColor, gradientString});
+    const OnClick = () => {
+        props.history.push('/organization/' + props.id);
+    };
     return (
-        <div className={classes.root}>
+        <div className={classes.root} onClick={OnClick}>
             <h2>{props.name}</h2>
+            <div className={classes.personas}>
+                {props.users.map((user: any) => <Persona hidePersonaDetails text={user.username} size={PersonaSize.size28} />)}
+            </div>
         </div>
     );
 };
 
-export default OrganizationCard;
+export default withRouter(OrganizationCard);
