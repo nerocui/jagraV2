@@ -44,6 +44,7 @@ export function FetchOrganizationById(id: number) {
 		Axios.get(GetRootURL() + '/api/organization/' + id.toString())
 			.then(res => {
 				console.log(res);
+				dispatch(SetOrganization(res.data));
 			})
 			.catch(err => {
 				console.log(err);

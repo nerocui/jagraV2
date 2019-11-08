@@ -16,6 +16,8 @@ export type ThemeState = {
 
 export type OrganizationState = {
 	organizations: Array<Organization>,
+	users: Array<any>,
+	invitations: Array<any>,
 };
 
 export type State = {

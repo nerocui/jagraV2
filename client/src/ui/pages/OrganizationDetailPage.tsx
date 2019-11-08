@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FetchOrganizationById } from '../../action';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
+import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import UserList from '../components/UserList';
 import TaskList from '../components/TaskList';
@@ -14,6 +15,7 @@ import { useMediaQuery } from 'react-responsive';
 
 const OrganizationDetailPage = (props: any) => {
     props.FetchOrganizationById(props.match.params.id);
+    //TODO: come back and have another layer of container here, otherwise fetch will happen on every resize
     const classes = useStyle();
     const isTablet = useMediaQuery({
 		query: '(max-width: 1199px)',
@@ -70,6 +72,7 @@ const OrganizationDetailPage = (props: any) => {
     return (
         <Stack horizontal className={classes.root}>
             <div className={classes.userList}>
+                <Label>Users</Label>
                 <UserList />
             </div>
             <div className={classes.taskList}>
