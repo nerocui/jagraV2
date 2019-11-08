@@ -13,7 +13,8 @@ namespace server.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Color = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,6 +98,7 @@ namespace server.Migrations
                     Description = table.Column<string>(nullable: true),
                     CreatorId = table.Column<int>(nullable: false),
                     AssigneeId = table.Column<int>(nullable: false),
+                    OrganizationId = table.Column<int>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     LastUpdated = table.Column<DateTime>(nullable: false)
                 },
@@ -113,6 +115,12 @@ namespace server.Migrations
                         name: "FK_Tasks_Users_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -258,6 +266,11 @@ namespace server.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tasks_OrganizationId",
+                table: "Tasks",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TaskWatches_TaskId",
                 table: "TaskWatches",
                 column: "TaskId");
@@ -284,13 +297,13 @@ namespace server.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Organizations");
-
-            migrationBuilder.DropTable(
                 name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Organizations");
         }
     }
 }

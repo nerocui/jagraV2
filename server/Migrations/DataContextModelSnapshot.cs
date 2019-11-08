@@ -127,6 +127,9 @@ namespace server.Migrations
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
@@ -135,6 +138,8 @@ namespace server.Migrations
                     b.HasIndex("AssigneeId");
 
                     b.HasIndex("CreatorId");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Tasks");
                 });
@@ -269,6 +274,12 @@ namespace server.Migrations
                     b.HasOne("server.Models.User", "Creator")
                         .WithMany("CreatedTasks")
                         .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("server.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

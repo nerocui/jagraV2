@@ -13,6 +13,8 @@ namespace server.Models
         public ICollection<TaskWatch> Watchers { get; set; }
         public int CreatorId { get; set; }
         public int AssigneeId { get; set; }
+        public Organization Organization { get; set; }
+        public int OrganizationId { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
         public ICollection<TaskDependency> Dependers { get; set; }
