@@ -17,14 +17,13 @@ namespace server.data
 		public async Task<Task> Add(Task task)
 		{
             var taskTracker = await _context.Tasks.AddAsync(task);
-            var watchers = new List<TaskWatch>();
-            watchers.Add(new TaskWatch { TaskId = taskTracker.Entity.Id, UserId = taskTracker.Entity.CreatorId });
+            await _context.SaveChangesAsync();
+            var taskToReturn = await Watch(task.Id, task.CreatorId);
             if (taskTracker.Entity.CreatorId != taskTracker.Entity.AssigneeId)
             {
-                watchers.Add(new TaskWatch { TaskId = taskTracker.Entity.Id, UserId = taskTracker.Entity.AssigneeId });
+                taskToReturn = await Watch(task.Id, task.AssigneeId);
             }
-            await _context.SaveChangesAsync();
-            return taskTracker.Entity;
+            return taskToReturn;
         }
 
 		public Task<Task> Assign(Task task, User user)
@@ -37,10 +36,21 @@ namespace server.data
 			throw new System.NotImplementedException();
 		}
 
+        public async Task<Task> GetTask(int taskId)
+        {
+            var task = await _context.Tasks
+                .Include(x => x.Watchers)
+                .Include(x => x.Creator)
+                .Include(x => x.Assignee)
+                .FirstOrDefaultAsync(x => x.Id == taskId);
+            return task;
+        }
+
         public async Task<IEnumerable<Task>> GetTasksByOrganization(int OrganizationId)
         {
             var tasks = await _context.Tasks
                 .Where(x => x.OrganizationId == OrganizationId)
+                .Include(x => x.Watchers)
                 .ToListAsync();
             return tasks;
         }
@@ -60,9 +70,11 @@ namespace server.data
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Task> Watch(Task task, User user)
+		public async Task<Task> Watch(int taskId, int userId)
 		{
-			throw new System.NotImplementedException();
+            await _context.TaskWatches.AddAsync(new TaskWatch { TaskId = taskId, UserId = userId });
+            await _context.SaveChangesAsync();
+            return await GetTask(taskId);
 		}
 	}
 }

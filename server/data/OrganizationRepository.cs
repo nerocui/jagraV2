@@ -14,33 +14,23 @@ namespace server.data
 		{
 			_context = context;
 		}
-		public async Task<User> AddUser(Organization organization, User user)
+		public async Task<Organization> AddUser(int organizationId, int userId, string role)
 		{
 			OrganizationUser ou = new OrganizationUser();
-            ou.Role = "Admin";
-            ou.Organization = organization;
-            ou.OrganizationId = organization.Id;
-            ou.User = user;
-            ou.UserId = user.Id;
+            ou.Role = role;
+            ou.OrganizationId = organizationId;
+            ou.UserId = userId;
             await _context.OrganizationUsers.AddAsync(ou);
             await _context.SaveChangesAsync();
-            return user;
+            return await GetOrganization(organizationId);
 		}
 
 		public async Task<Organization> Create(Organization organization, User user)
 		{
-            var orgtracker = await _context.Organizations.AddAsync(organization);
-			OrganizationUser admin = new OrganizationUser();
-            admin.Role = "Admin";
-            admin.Organization = organization;
-            admin.OrganizationId = orgtracker.Entity.Id;
-            admin.User = user;
-            admin.UserId = user.Id;
-            await _context.OrganizationUsers.AddAsync(admin);
-            orgtracker.Entity.Users.Add(admin);
-            
+            var orgtracker = await _context.Organizations.AddAsync(organization);            
             await _context.SaveChangesAsync();
-            return orgtracker.Entity;
+
+            return await AddUser(orgtracker.Entity.Id, user.Id, "Admin");
 		}
 
 		public Task<bool> DeleteOrganization(Organization organization)

@@ -13,7 +13,7 @@ namespace server.data
         /**
         * After the user click join, they will be added to the organization by this function
         */
-        Task<User> AddUser(Organization organization, User user);
+        Task<Organization> AddUser(int organizationId, int userId, string role);
         Task<User> RemoveUser(Organization organization, User user);
         Task<bool> DeleteOrganization(Organization organization);
         Task<bool> OrganizationExist(string name);

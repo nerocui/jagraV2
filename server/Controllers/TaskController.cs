@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.data;
@@ -18,12 +19,14 @@ namespace server.Controllers
         private readonly ITaskRepository _repo;
         private readonly IUserRepository _users;
         private readonly IOrganizationRepository _organizations;
+        private readonly IMapper _mapper;
 
-        public TaskController(ITaskRepository repo, IUserRepository users, IOrganizationRepository organizations)
+        public TaskController(ITaskRepository repo, IUserRepository users, IOrganizationRepository organizations, IMapper mapper)
         {
             _repo = repo;
             _users = users;
             _organizations = organizations;
+            _mapper = mapper;
         }
 
         [HttpPost("create")]
@@ -33,23 +36,19 @@ namespace server.Controllers
             {
                 return BadRequest("Bad request data, data don't exist.");
             }
-            var creator = await _users.GetUser(task.CreatorId);
-            var assignee = await _users.GetUser(task.AssigneeId);
             var taskToCreate = new Task
             {
                 Title = task.Title,
                 Description = task.Description,
-                Creator = creator,
-                Assignee = assignee,
                 CreatorId = task.CreatorId,
                 AssigneeId = task.AssigneeId,
-                Organization = await _organizations.GetOrganization(task.OrganizationId),
                 OrganizationId = task.OrganizationId,
-                Created = new DateTime(),
-                LastUpdated = new DateTime(),
+                Created = DateTime.Now,
+                LastUpdated = DateTime.Now,
             };
             var taskCreated = await _repo.Add(taskToCreate);
-            return Ok(taskCreated);
+            var taskToReturn = _mapper.Map<TaskForListDto>(taskCreated);
+            return Ok(taskToReturn);
         }
 
         [HttpGet("byorg")]
@@ -59,7 +58,19 @@ namespace server.Controllers
             {
                 return BadRequest("Organization does not exist.");
             }
-            var tasksToReturn = await _repo.GetTasksByOrganization(OrganizationId);
+            var tasks = await _repo.GetTasksByOrganization(OrganizationId);
+            var tasksToReturn = new List<TaskForListDto>();
+            foreach (var task in tasks)
+            {
+                var watchers = new List<UserForListDto>();
+                foreach (var watcher in task.Watchers)
+                {
+                    watchers.Add(_mapper.Map<UserForListDto>(await _users.GetUser(watcher.UserId)));
+                }
+                var taskToReturn = _mapper.Map<TaskForListDto>(task);
+                taskToReturn.Watchers = watchers;
+                tasksToReturn.Add(taskToReturn);
+            }
             return Ok(tasksToReturn);
         }
     }

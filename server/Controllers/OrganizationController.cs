@@ -19,12 +19,20 @@ namespace server.Controllers
         private readonly IInvitationRepository _invitations;
         private readonly IConfiguration _config;
 		private readonly IUserRepository _users;
-		private readonly IMapper _mapper;
-		public OrganizationController(IOrganizationRepository repo, IInvitationRepository invitations, IUserRepository users, IConfiguration config, IMapper mapper)
+        private readonly ITaskRepository _tasks;
+        private readonly IMapper _mapper;
+		public OrganizationController(
+            IOrganizationRepository repo,
+            IInvitationRepository invitations,
+            IUserRepository users,
+            ITaskRepository tasks,
+            IConfiguration config,
+            IMapper mapper)
 		{
 			_mapper = mapper;
 			_users = users;
-			_config = config;
+            _tasks = tasks;
+            _config = config;
 			_repo = repo;
             _invitations = invitations;
         }
@@ -62,8 +70,10 @@ namespace server.Controllers
                 inv.User = _mapper.Map<UserForListDto>(await _users.GetUser(invitation.UserId));
                 invitationsToReturn.Add(inv);
             }
+            var tasks = await _tasks.GetTasksByOrganization(id);
             orgToReturn.Invitations = invitationsToReturn;
             orgToReturn.Users = usersToReturn;
+            orgToReturn.Tasks = _mapper.Map<List<TaskForListDto>>(tasks);
 			return Ok(orgToReturn);
 		}
 

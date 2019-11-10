@@ -11,9 +11,10 @@ namespace server.data
         Task<Task> Delete(Task task);
         Task<Task> Assign(Task task, User user);
         Task<Task> Unassign(Task task);
-        Task<Task> Watch(Task task, User user);
+        Task<Task> Watch(int taskId, int userId);
         Task<Task> Unwatch(Task task, User user);
         Task<Task> Modify(Task task);
+        Task<Task> GetTask(int taskId);
         Task<IEnumerable<Task>> GetTasksByOrganization(int OrganizationId);
     }
 }
