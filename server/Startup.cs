@@ -54,6 +54,7 @@ namespace server
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IInvitationRepository, InvitationRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
             
             services.AddSwaggerGen(c =>
             {

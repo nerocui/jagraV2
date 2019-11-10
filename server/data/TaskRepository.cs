@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using server.Models;
 using Task = server.Models.Task;
 
@@ -11,10 +14,18 @@ namespace server.data
 		{
 			_context = context;
 		}
-		public Task<Task> Add(Task task)
+		public async Task<Task> Add(Task task)
 		{
-			throw new System.NotImplementedException();
-		}
+            var taskTracker = await _context.Tasks.AddAsync(task);
+            var watchers = new List<TaskWatch>();
+            watchers.Add(new TaskWatch { TaskId = taskTracker.Entity.Id, UserId = taskTracker.Entity.CreatorId });
+            if (taskTracker.Entity.CreatorId != taskTracker.Entity.AssigneeId)
+            {
+                watchers.Add(new TaskWatch { TaskId = taskTracker.Entity.Id, UserId = taskTracker.Entity.AssigneeId });
+            }
+            await _context.SaveChangesAsync();
+            return taskTracker.Entity;
+        }
 
 		public Task<Task> Assign(Task task, User user)
 		{
@@ -26,7 +37,15 @@ namespace server.data
 			throw new System.NotImplementedException();
 		}
 
-		public Task<Task> Modify(Task task)
+        public async Task<IEnumerable<Task>> GetTasksByOrganization(int OrganizationId)
+        {
+            var tasks = await _context.Tasks
+                .Where(x => x.OrganizationId == OrganizationId)
+                .ToListAsync();
+            return tasks;
+        }
+
+        public Task<Task> Modify(Task task)
 		{
 			throw new System.NotImplementedException();
 		}

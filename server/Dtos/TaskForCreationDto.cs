@@ -10,11 +10,8 @@ namespace server.Dtos
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public User Creator { get; set; }
-        public User Assignee { get; set; }
-        public ICollection<TaskWatch> Watchers { get; set; }
-        public DateTime LastUpdated { get; set; }
-        public ICollection<TaskDependency> Dependers { get; set; }
-        public ICollection<TaskDependency> Dependees { get; set; }
+        public int CreatorId { get; set; }
+        public int AssigneeId { get; set; }
+        public int OrganizationId { get; set; }
     }
 }

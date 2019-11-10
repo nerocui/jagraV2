@@ -40,7 +40,7 @@ namespace server.data
             orgtracker.Entity.Users.Add(admin);
             
             await _context.SaveChangesAsync();
-            return organization;
+            return orgtracker.Entity;
 		}
 
 		public Task<bool> DeleteOrganization(Organization organization)
