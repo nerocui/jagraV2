@@ -16,8 +16,7 @@ export type ThemeState = {
 
 export type OrganizationState = {
 	organizations: Array<Organization>,
-	users: Array<any>,
-	invitations: Array<any>,
+	chosenOrganization: Organization,
 };
 
 export type State = {
@@ -31,7 +30,8 @@ export type Organization = {
 	name: string,
 	color: string,
 	users: Array<User>,
-	invitations: Array<Invitation>
+	tasks: Array<any>,
+	invitations: Array<Invitation>,
 };
 
 export type Invitation = {
@@ -45,6 +45,12 @@ export type User = {
 	email: string,
 	created: Date,
 	knownAs: string,
-}
+};
 
-
+export type TaskForCreationDto = {
+	title: string,
+	description: string,
+	creatorId: number,
+	assigneeId: number,
+	organizationId: number,
+};

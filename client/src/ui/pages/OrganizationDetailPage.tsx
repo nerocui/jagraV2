@@ -64,6 +64,7 @@ const OrganizationDetailPage = (props: any) => {
                     </Pivot>
                 </div>
                 <div className={classes.taskListTablet}>
+                    <Label>Tasks</Label>
                     <TaskList />
                 </div>
             </Stack>
@@ -76,6 +77,7 @@ const OrganizationDetailPage = (props: any) => {
                 <UserList />
             </div>
             <div className={classes.taskList}>
+                <Label>Tasks</Label>
                 <TaskList />
             </div>
             <div className={classes.invitationPane}>

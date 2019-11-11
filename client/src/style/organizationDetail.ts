@@ -17,6 +17,7 @@ const useStyles = createUseStyles({
     },
     taskList: {
         width: '60%',
+        padding: '.5rem',
         borderRight: '1px solid white',
     },
     taskListTablet: {

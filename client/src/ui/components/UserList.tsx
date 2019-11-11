@@ -13,7 +13,7 @@ const UserList = (props: any) => {
 
 function mapStateToProps(state: State) {
     return {
-        users: state.OrganizationState.users,
+        users: state.OrganizationState.chosenOrganization.users,
     };
 }
 

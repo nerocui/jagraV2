@@ -51,6 +51,7 @@ namespace server.data
             var tasks = await _context.Tasks
                 .Where(x => x.OrganizationId == OrganizationId)
                 .Include(x => x.Watchers)
+                .OrderByDescending(x => x.Created)
                 .ToListAsync();
             return tasks;
         }

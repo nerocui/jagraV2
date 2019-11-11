@@ -2,6 +2,7 @@ import Axios from 'axios';
 import TYPE from './type';
 import { loadTheme } from 'office-ui-fabric-react/lib/Styling';
 import { GetRootURL } from '../utils/DomainService';
+import { TaskForCreationDto } from '../models';
 
 
 function DispatchLogin(token: string) {
@@ -36,6 +37,25 @@ function SetOrganization(org: any) {
 	return {
 		type: TYPE.SET_ORGANIZATION,
 		payload: org,
+	};
+}
+
+function AddTask(task: any) {
+	return {
+		type: TYPE.ADD_TASK,
+		payload: task,
+	};
+}
+
+export function CreateTask(task: TaskForCreationDto) {
+	return (dispatch: any) => {
+		Axios.post(GetRootURL() + '/api/task/create', {...task})
+			.then(res => {
+				dispatch(AddTask(res.data));
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	};
 }
 
