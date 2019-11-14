@@ -5,6 +5,9 @@ const useStyles = createUseStyles({
         marginTop: '.5rem',
         marginBottom: '.5rem',
     },
+    stackItem: {
+        width: '50%',
+    },
 });
 
 export default useStyles;

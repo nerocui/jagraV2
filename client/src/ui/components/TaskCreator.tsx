@@ -12,39 +12,33 @@ const TaskCreator = (props: any) => {
     const [title, SetTitle] = useState('');
     const [description, SetDescription] = useState('');
     const [assigneeId, SetAssignee] = useState('');
-    const [organizationId, SetOrganization] = useState('');
     const OnSubmit = (e: any) => {
         e.preventDefault();
-        if (title === '' || description === '' || assigneeId === '' || organizationId === '') {
+        if (title === '' || description === '' || assigneeId === '') {
             return;
         }
         props.CreateTask({
             title,
             description,
             assigneeId: parseInt(assigneeId),
-            organizationId: parseInt(organizationId),
+            organizationId: props.organizationId,
             creatorId: props.userId,
         });
         SetTitle('');
         SetDescription('');
         SetAssignee('');
-        SetOrganization('');
     };
     const classes = useStyle();
     return (
         <form onSubmit={OnSubmit}>
-            <Stack horizontal horizontalAlign="space-between">
-                <Stack.Item>
+            <Stack horizontal>
+                <Stack.Item className={classes.stackItem}>
                     <Label>Title</Label>
                     <TextField placeholder="Title" value={title} onChange={(e: any) => SetTitle(e.target.value)}/>
                 </Stack.Item>
-                <Stack.Item>
+                <Stack.Item className={classes.stackItem}>
                     <Label>Assignee</Label>
                     <TextField placeholder="Assignee" value={assigneeId.toString()} onChange={(e: any) => SetAssignee(e.target.value)} />
-                </Stack.Item>
-                <Stack.Item>
-                    <Label>Organization</Label>
-                    <TextField placeholder="Organization" value={organizationId.toString()} onChange={(e: any) => SetOrganization(e.target.value)} />
                 </Stack.Item>
             </Stack>
             <Label>Description</Label>
@@ -59,6 +53,7 @@ const TaskCreator = (props: any) => {
 function MapStateToProps(state: State) {
     return {
         userId: state.AuthState.id,
+        organizationId: state.OrganizationState.chosenOrganization.id,
     };
 }
 

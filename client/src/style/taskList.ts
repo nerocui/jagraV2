@@ -29,6 +29,9 @@ const useStyles = createUseStyles({
             transform: 'scale(1.01)',
             backgroundColor: (props: any) => props.theme === 'dark' ? '#303030' : '#ededed',
         },
+        '&:active': {
+            transform: 'scale(1) translateY(2px)',
+        },
     },
     plusButton: {
         position: 'absolute',
