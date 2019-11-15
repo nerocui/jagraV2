@@ -49,8 +49,8 @@ namespace server.Controllers
 			{
 				return BadRequest("Organization name already exist");
 			}
-			var rogCreated = await _repo.Create(org, user);
-			return StatusCode(201);
+			var orgCreated = await _repo.Create(org, user);
+            return Ok(orgCreated);
 		}
 
 		[HttpGet("{id}")]
