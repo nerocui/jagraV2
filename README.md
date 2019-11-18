@@ -15,3 +15,4 @@ A task management service for any organization.
 
 ## Screenshots
 ![List of Organizations](https://github.com/nerocui/jagraV2/blob/master/screenshots/orgs.png)
+![Android App Signup](https://github.com/nerocui/jagraMobile/blob/master/screenshots/signup.png?raw=true)
